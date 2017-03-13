@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Honeywell Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css">
+    <link rel="stylesheet" type="text/css" href="components/bootstrap-select/dist/css/bootstrap-select.min.css">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="components/bootstrap/dist/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>   
+    
+    <script type="text/javascript">
+    function getEmployeeList()  {
+        // The baseURI variable is created by the result.base_server_base_uri 
+        // which is returned when getting a token and should be used to 
+        // create the url_base.
+        //var url_base = baseURI;
+        $.ajax({
+            'url': '/api/employees',
+            'type': 'GET',
+            'content-Type': 'x-www-form-urlencoded',
+            'dataType': 'json',
+            
+            'success': function (result) {
+              //Process success actions
+              var returnResult = JSON.stringify(result);
+             
+              var listHTML = 'Attendees <select multiple id="meeting-attendees" name="meeting-attendees" class="input-large">';
+              
+              $.each(result, function(index) {
+            	  listHTML += '<option>' + result[index].name + '</option>';					                  
+              });
+              
+              listHTML += '</select>'
+              document.getElementById('employeesSelectList').innerHTML = listHTML;					              
+              return result;
+            },
+            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+              //Process error actions
+              alert('Error: ' + errorThrown);
+              console.log(XMLHttpRequest.status + ' ' + 
+                  XMLHttpRequest.statusText);
+              return false;
+            }
+        });
+    }
+					        	
+</script>
+
+  </head>
+  <body onLoad= "getEmployeeList()">
+    <div id="page-wrapper" class="open">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar">
+          <li class="sidebar-main"><a href="index.html">Dashboard <span class="menu-icon fa fa-dashboard"></span></a></li>
+          <li class="sidebar-title"><span>NAVIGATION</span></li>
+          <li class="sidebar-list"><a href="index.html">Dynamic Dashboard <span class="menu-icon fa fa-dashboard"></span></a></li>
+          <li class="sidebar-list"><a href="employee.html">Employees <span class="menu-icon fa fa-users"></span></a></li>
+          <li class="sidebar-list"><a href="location.html">Locations <span class="menu-icon fa fa-map-marker"></span></a></li>
+          <li class="sidebar-list"><a href="meeting.html">Meetings <span class="menu-icon fa fa-calendar"></span></a></li>
+        </ul>
+      </div>
+
+      <!-- End Sidebar -->
+      <div id="content-wrapper">
+
+        <div class="page-content">
+
+          <!-- Header Bar -->
+          <div class="row header col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle"><img src="img/avatar.jpg" alt=""></a>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">Dynamic Dashboard</div>
+              <div class="breadcrumb-links">Home / Dynamic Dashboard</div>
+            </div>
+          </div>
+          <!-- End Header Bar -->
+
+
+          <!-- Tables -->
+          <div class="row">
+
+            <!-- Widget listing -->
+            <div class="col-lg-12">
+              <div class="widget">
+                <div class="widget-header">Meetings
+                  
+                </div>
+                <div id="meetingsTable" class="table-responsive">
+                  <script type="text/javascript">
+                  $(document).ready(function() {
+				        // The baseURI variable is created by the result.base_server_base_uri 
+				        // which is returned when getting a token and should be used to 
+				        // create the url_base.
+				        //var url_base = baseURI;
+				        $.ajax({
+				            'url': '/api/meetings',
+				            'type': 'GET',
+				            'content-Type': 'x-www-form-urlencoded',
+				            'dataType': 'json',
+				            
+				            'success': function (result) {
+				              //Process success actions
+				              var returnResult = JSON.stringify(result);
+				              var listNode = $("#meetingsTable");
+				              var listHTML = '<table class="table table-striped">';
+				              listHTML += '<thead><tr><th class="text-center">Date/Time</th><th>Subject</th><th>Attendees</th></tr></thead>';
+				              $.each(result, function(index) {
+				            	  listHTML += '<tr><td class="text-center">' + result[index].date + ' '+result[index].time +
+				                  '</td><td>' + result[index].subject +
+				                  '</td><td>' + result[index].attendees + 
+				                  '</td><td>' + '<div><a href="meeting.html" onClick="deleteMeeting('+result[index].id+')"><i class="glyphicon glyphicon-trash"></i></a></div>' + '</td></tr>';
+				              });
+				              document.getElementById('meetingsTable').innerHTML = listHTML;
+				              return result;
+				            },
+				            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+				              //Process error actions
+				              alert('Error: ' + errorThrown);
+				              console.log(XMLHttpRequest.status + ' ' + 
+				                  XMLHttpRequest.statusText);
+				              return false;
+				            }
+				        });
+				    });
+                  
+                  function deleteMeeting(id){    	
+                  	$.ajax({
+                          'url': '/api/meetings/'+id,
+                          'type': 'DELETE',
+                          'content-Type': 'x-www-form-urlencoded',
+                          'dataType': 'json'            
+                      });
+                  }
+				        	
+				        
+				   </script>
+                </div>
+              </div>
+            </div><!-- End Widgets -->
+
+          </div><!-- End Row -->
+
+          <hr>
+
+          <!-- Create/Edit -->
+          <div class="row">
+
+            <!-- Widget listing -->
+            <div class="col-lg-12">
+              <div class="widget">
+                <div class="widget-header">Create/Edit Template</div>
+                <div class="widget-body">
+                  <form id="createMeetingForm" class="form-horizontal">
+
+                    <legend>Create Meeting</legend>
+
+                    <!-- Date/Time-->
+                    <div class="controls">
+                    Date
+                      <input id="meeting-date" name="meeting-date" type="date" class="input-medium">
+                    </div>
+                    <div class="controls">
+                    Time
+                      <input id="meeting-time" name="meeting-time" type="time" class="input-medium">
+                    </div>
+
+                    <div class="controls">
+                    Subject
+                      <input id="meeting-subject" name="meeting-subject" type="text" placeholder="foo-bar" class="input-medium">
+                    </div>
+
+                    <!-- Attendees -->
+                    <div id="employeesSelectList">
+                    
+                    </div>
+					<br>
+                    <button class="btn btn-primary" type="submit">Create</button>
+                  </form>
+                  <script>
+                  (function($){
+                	  
+                	   $( '#createMeetingForm' ).on( 'submit', function(e) {
+                	       e.preventDefault();
+                	       var date =  $( '#meeting-date' ).val();
+                	       var time =  $( '#meeting-time' ).val();
+                	       var subject =  $( '#meeting-subject' ).val();
+                	       var attendees =  $( '#meeting-attendees' ).val().toString();
+                	       var JSONObj = {
+                	           "date"         	 :date,
+                	           "time"			 :time,
+                	           "subject"		 :subject,
+                	           "attendees"		 :attendees
+                	       };
+                	       var data = JSON.stringify(JSONObj);                  	       
+                	       $.ajax({
+                	           'type':'POST',
+                	           'url': '/api/meetings',
+                	           'Content-Type':'application/json',
+                	           'dataType': 'application/json',
+                	           'data': data, 
+                	           headers: {
+                	        	    'Accept': 'application/json',
+                	        	    'Content-Type': 'application/json'
+                	        	}
+                	        	
+                	       }); 
+                	       window.location.reload();
+                	   });                	 
+                	})(jQuery);
+                  </script>
+                </div><!-- End Meeting body -->
+              </div><!-- End Meeting -->
+            </div><!-- End Column -->
+          </div><!-- End Row -->
+
+        </div><!-- End Page Content -->
+      </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+  </body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Honeywell Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div id="page-wrapper" class="open">
+
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <ul class="sidebar">
+          <li class="sidebar-main"><a href="index.html">Dashboard <span class="menu-icon fa fa-dashboard"></span></a></li>
+          <li class="sidebar-title"><span>NAVIGATION</span></li>
+          <li class="sidebar-list"><a href="index.html">Dynamic Dashboard <span class="menu-icon fa fa-dashboard"></span></a></li>
+          <li class="sidebar-list"><a href="employee.html">Employees <span class="menu-icon fa fa-users"></span></a></li>
+          <li class="sidebar-list"><a href="location.html">Locations <span class="menu-icon fa fa-map-marker"></span></a></li>
+          <li class="sidebar-list"><a href="meeting.html">Meetings <span class="menu-icon fa fa-calendar"></span></a></li>
+        </ul>
+      </div>
+
+      <!-- End Sidebar -->
+      <div id="content-wrapper">
+
+        <div class="page-content">
+
+          <!-- Header Bar -->
+          <div class="row header col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle"><img src="img/avatar.jpg" alt=""></a>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">Dynamic Dashboard</div>
+              <div class="breadcrumb-links">Home / Dynamic Dashboard</div>
+            </div>
+          </div>
+          <!-- End Header Bar -->
+
+          <!-- Dashboard Boxes -->
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <div class="widget">
+                <div class="widget-header">
+                  <div class="widget-icon green pull-left">
+                    <i class="fa fa-users"></i>
+                  </div>
+                  <div id="countEmployees" class="title">
+                  	<script type="text/javascript">
+	                  $(document).ready(function() {
+					        // The baseURI variable is created by the result.base_server_base_uri 
+					        // which is returned when getting a token and should be used to 
+					        // create the url_base.
+					        //var url_base = baseURI;
+					        $.ajax({
+					            'url': '/api/employees/count',
+					            'type': 'GET',
+					            'content-Type': 'x-www-form-urlencoded',
+					            'dataType': 'json',
+					            
+					            'success': function (result) {
+					              //Process success actions
+					              var returnResult = JSON.stringify(result);
+					              var listNode = $("#countEmployees");
+					             
+					              document.getElementById('countEmployees').innerHTML = returnResult;
+					              return result;
+					            },
+					            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+					              //Process error actions
+					              alert('Error: ' + errorThrown);
+					              console.log(XMLHttpRequest.status + ' ' + 
+					                  XMLHttpRequest.statusText);
+					              return false;
+					            }
+					        });
+					    });		        
+				   </script>
+                  </div>
+                  <div class="comment">Employees</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <div class="widget">
+                <div class="widget-header">
+                  <div class="widget-icon yellow pull-left">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                  <div id="locationsCount" class="title">
+                  	<script type="text/javascript">
+	                  $(document).ready(function() {
+					        // The baseURI variable is created by the result.base_server_base_uri 
+					        // which is returned when getting a token and should be used to 
+					        // create the url_base.
+					        //var url_base = baseURI;
+					        $.ajax({
+					            'url': '/api/locations/count',
+					            'type': 'GET',
+					            'content-Type': 'x-www-form-urlencoded',
+					            'dataType': 'json',
+					            
+					            'success': function (result) {
+					              //Process success actions
+					              var returnResult = JSON.stringify(result);
+					              var listNode = $("#locationsCount");
+					             
+					              document.getElementById('locationsCount').innerHTML = returnResult;
+					              return result;
+					            },
+					            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+					              //Process error actions
+					              alert('Error: ' + errorThrown);
+					              console.log(XMLHttpRequest.status + ' ' + 
+					                  XMLHttpRequest.statusText);
+					              return false;
+					            }
+					        });
+					    });		        
+				   </script>
+                  </div>
+                  <div class="comment">Locations</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <div class="widget">
+                <div class="widget-header">
+                  <div class="widget-icon red pull-left">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <div id="meetingsCount" class="title">
+                  	<script type="text/javascript">
+	                  $(document).ready(function() {
+					        // The baseURI variable is created by the result.base_server_base_uri 
+					        // which is returned when getting a token and should be used to 
+					        // create the url_base.
+					        //var url_base = baseURI;
+					        $.ajax({
+					            'url': '/api/meetings/count',
+					            'type': 'GET',
+					            'content-Type': 'x-www-form-urlencoded',
+					            'dataType': 'json',
+					            
+					            'success': function (result) {
+					              //Process success actions
+					              var returnResult = JSON.stringify(result);
+					              var listNode = $("#meetingsCount");
+					             
+					              document.getElementById('meetingsCount').innerHTML = returnResult;
+					              return result;
+					            },
+					            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+					              //Process error actions
+					              alert('Error: ' + errorThrown);
+					              console.log(XMLHttpRequest.status + ' ' + 
+					                  XMLHttpRequest.statusText);
+					              return false;
+					            }
+					        });
+					    });		        
+				   </script>
+                  </div>
+                  <div class="comment">Meetings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tables -->
+          <div class="row">
+
+            <!-- Employees listing -->
+            <div class="col-lg-6">
+              <div class="widget">
+                <div class="widget-header">Employees
+                  
+                </div>
+                <div id="usersTable" class="table-responsive">
+                  <script type="text/javascript">
+                  $(document).ready(function() {
+				        // The baseURI variable is created by the result.base_server_base_uri 
+				        // which is returned when getting a token and should be used to 
+				        // create the url_base.
+				        //var url_base = baseURI;
+				        $.ajax({
+				            'url': '/api/employees',
+				            'type': 'GET',
+				            'content-Type': 'x-www-form-urlencoded',
+				            'dataType': 'json',
+				            
+				            'success': function (result) {
+				              //Process success actions
+				              var returnResult = JSON.stringify(result);
+				              var listNode = $("#usersTable");
+				              var listHTML = '<table class="table table-striped">';
+				              listHTML += '<thead><tr><th class="text-center">ID</th><th>Name</th></tr></thead>';
+				              $.each(result, function(index) {
+				            	  listHTML += '<tr><td class="text-center">' + result[index].id +
+				                  '</td><td>' + result[index].name +
+				                  '</td></tr>';
+				              });
+				              document.getElementById('usersTable').innerHTML = listHTML;
+				              return result;
+				            },
+				            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+				              //Process error actions
+				              alert('Error: ' + errorThrown);
+				              console.log(XMLHttpRequest.status + ' ' + 
+				                  XMLHttpRequest.statusText);
+				              return false;
+				            }
+				        });
+				    });
+				        	
+				        
+				   </script>
+                </div>
+              </div>
+            </div><!-- End Employees -->
+
+            <!-- divider 
+            <div class="col-lg-1">
+            </div> -->
+
+            <!-- Locations listing -->
+            <div class="col-lg-6">
+              <div class="widget">
+                <div class="widget-header">Locations
+                  
+                </div>
+                <div id="locationsTable" class="table-responsive">
+                  <script type="text/javascript">
+                  $(document).ready(function() {
+				        // The baseURI variable is created by the result.base_server_base_uri 
+				        // which is returned when getting a token and should be used to 
+				        // create the url_base.
+				        //var url_base = baseURI;
+				        $.ajax({
+				            'url': '/api/locations',
+				            'type': 'GET',
+				            'content-Type': 'x-www-form-urlencoded',
+				            'dataType': 'json',
+				            
+				            'success': function (result) {
+				              //Process success actions
+				              var returnResult = JSON.stringify(result);
+				              var listNode = $("#locationsTable");
+				              var listHTML = '<table class="table table-striped">';
+				              listHTML += '<thead><tr><th class="text-center">ID</th><th>Name</th><th>Time Zone</th></tr></thead>';
+				              $.each(result, function(index) {
+				            	  listHTML += '<tr><td class="text-center">' + result[index].id +
+				                  '</td><td>' + result[index].name +
+				                  '</td><td>' + result[index].timeZone + '</td></tr>';
+				              });
+				              document.getElementById('locationsTable').innerHTML = listHTML;
+				              return result;
+				            },
+				            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+				              //Process error actions
+				              alert('Error: ' + errorThrown);
+				              console.log(XMLHttpRequest.status + ' ' + 
+				                  XMLHttpRequest.statusText);
+				              return false;
+				            }
+				        });
+				    });
+				        	
+				        
+				   </script>
+                </div>
+              </div>
+            </div><!-- End Locations -->
+
+            <!-- Meetings listing -->
+            <div class="col-lg-12">
+              <div class="widget">
+                <div class="widget-header">Meetings
+                  
+                </div>
+                <div id="meetingsTable" class="table-responsive">
+                  <script type="text/javascript">
+                  $(document).ready(function() {
+				        // The baseURI variable is created by the result.base_server_base_uri 
+				        // which is returned when getting a token and should be used to 
+				        // create the url_base.
+				        //var url_base = baseURI;
+				        $.ajax({
+				            'url': '/api/meetings',
+				            'type': 'GET',
+				            'content-Type': 'x-www-form-urlencoded',
+				            'dataType': 'json',
+				            
+				            'success': function (result) {
+				              //Process success actions
+				              var returnResult = JSON.stringify(result);
+				              var listNode = $("#meetingsTable");
+				              var listHTML = '<table class="table table-striped">';
+				              listHTML += '<thead><tr><th class="text-center">Date/Time</th><th>Subject</th><th>Attendees</th></tr></thead>';
+				              $.each(result, function(index) {
+				            	  listHTML += '<tr><td class="text-center">' + result[index].date + ' '+result[index].time +
+				                  '</td><td>' + result[index].subject +
+				                  '</td><td>' + result[index].attendees + '</td></tr>';
+				              });
+				              document.getElementById('meetingsTable').innerHTML = listHTML;
+				              return result;
+				            },
+				            'error': function (XMLHttpRequest, textStatus, errorThrown) {
+				              //Process error actions
+				              alert('Error: ' + errorThrown);
+				              console.log(XMLHttpRequest.status + ' ' + 
+				                  XMLHttpRequest.statusText);
+				              return false;
+				            }
+				        });
+				    });
+				        	
+				        
+				   </script>
+                </div>
+              </div>
+            </div><!-- End Meetings -->
+
+          </div><!-- End Tables -->
+
+        </div><!-- End Page Content -->
+      </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+  </body>
+</html>
